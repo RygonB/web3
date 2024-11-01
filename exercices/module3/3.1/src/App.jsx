@@ -33,6 +33,10 @@ const HandleButton = ({ handle, message }) => {
   );
 };
 
+const Loading =() =>{
+  return <p>Loading ...</p>;
+}
+
 const App = () => {
   // save clicks of each button to its own state
   const [good, setGood] = useState(0);
@@ -40,6 +44,12 @@ const App = () => {
   const [bad, setBad] = useState(0);
   const [all, setAll] = useState(0);
 
+  const [loading, setLoading] = useState(true);
+
+  setTimeout(() => setLoading(false),3000);
+
+  if(loading) return <Loading/>
+  
   const handleClickGood = () => {
     setGood(good + 1);
     setAll(all + 1);
