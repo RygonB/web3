@@ -1,25 +1,26 @@
 import { useState } from "react";
 
-
-const StatisticsLine= ({text, value}) => {
+const StatisticsLine = ({ text, value }) => {
   return (
     <div>
-      <p>
-        {text} {value}
-      </p>
+     <tr>
+      <td>{text}</td>
+      <td>{value}</td>
+     </tr>
     </div>
-  )
-}
+  );
+};
 
 const Statistics = ({ good, neutral, bad, all, average }) => {
   if (all < 1) return <p>No feedback given</p>;
   return (
     <div>
-     <StatisticsLine text={"good"} value={good}/>
-     <StatisticsLine text={"neutral"} value={neutral}/>
-     <StatisticsLine text={"bad"} value={bad}/>
-     <StatisticsLine text={"all"} value={all}/>
-     <StatisticsLine text={"average"} value={average}/>
+      <h1>Statistics</h1>
+      <StatisticsLine text={"good"} value={good} />
+      <StatisticsLine text={"neutral"} value={neutral} />
+      <StatisticsLine text={"bad"} value={bad} />
+      <StatisticsLine text={"all"} value={all} />
+      <StatisticsLine text={"average"} value={average} />
     </div>
   );
 };
