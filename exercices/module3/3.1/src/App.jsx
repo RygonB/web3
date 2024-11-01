@@ -1,8 +1,8 @@
 import { useState } from "react";
 
-const Statistics = (props) =>{
-  const {good, neutral, bad, all, average} = props;
-  return(
+const Statistics = ({ good, neutral, bad, all, average }) => {
+  if (all < 1) return <p>No feedback given</p>;
+  return (
     <div>
       <h1>statistics</h1>
       <p>good {good}</p>
@@ -12,8 +12,15 @@ const Statistics = (props) =>{
       <p>average {average}</p>
     </div>
   );
-}
+};
 
+const HandleButton = ({ handle, message }) => {
+  return (
+    <div>
+      <button onClick={handle}>{message}</button>
+    </div>
+  );
+};
 
 const App = () => {
   // save clicks of each button to its own state
@@ -40,11 +47,17 @@ const App = () => {
     <div>
       <h1>give feedback</h1>
       <div>
-        <button onClick={handleClickGood}>good</button>
-        <button onClick={handleClickNeutral}>neutral</button>
-        <button onClick={handleClickBad}>bad</button>
+        <HandleButton handle={handleClickGood} message={"good"} />
+        <HandleButton handle={handleClickNeutral} message={"neutral"} />
+        <HandleButton handle={handleClickBad} message={"bad"} />
       </div>
-      <Statistics good={good} neutral={neutral} bad={bad} all={all} average={average}/>
+      <Statistics
+        good={good}
+        neutral={neutral}
+        bad={bad}
+        all={all}
+        average={average}
+      />
     </div>
   );
 };
