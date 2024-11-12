@@ -1,20 +1,27 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import PersonAPI from "./services/PersonAPI";
 
 const App = () => {
   const [persons, setPersons] = useState([]);
   const [newName, setNewName] = useState("");
   const [newNumber, setNewNumber] = useState("");
 
+  const getAll = () => {
+    PersonAPI.getAll()
+      .then((persons) => setPersons(persons))
+      .catch((error) => console.warn(error));
+  };
+  useEffect(getAll,[]);
 
   const addPhone = (e) => {
     e.preventDefault();
     const phoneObject = {
       name: newName,
       number: newNumber,
-      id: Date.now()
+      id: Date.now(),
     };
-    const personExist = persons.some(person => person.name === newName);
-    if(personExist){
+    const personExist = persons.some((person) => person.name === newName);
+    if (personExist) {
       alert(`${newName} is already added to phonebook`);
       return;
     }
@@ -27,28 +34,34 @@ const App = () => {
     setNewName(e.target.value);
   };
 
-  const handleNumberChange = (e) =>{
+  const handleNumberChange = (e) => {
     setNewNumber(e.target.value);
-  }
-  const Person = ({person}) =>{
-    return <p>{person.name} {person.number}</p>
-  }
+  };
+  const Person = ({ person }) => {
+    return (
+      <p>
+        {person.name} {person.number}
+      </p>
+    );
+  };
   return (
     <div>
       <h2>Phonebook</h2>
       <form onSubmit={addPhone}>
         <div>
-          name: <input value={newName} onChange={handlePhotosChange}/>
+          name: <input value={newName} onChange={handlePhotosChange} />
         </div>
         <div>
-          number: <input value={newNumber} onChange={handleNumberChange}/>
+          number: <input value={newNumber} onChange={handleNumberChange} />
         </div>
         <div>
           <button type="submit">add</button>
         </div>
       </form>
       <h2>Numbers</h2>
-      {persons.map(person => <Person key={person.id} person={person}/>)}
+      {persons.map((person) => (
+        <Person key={person.id} person={person} />
+      ))}
     </div>
   );
 };
